@@ -23,7 +23,7 @@ What software you need to install and how to install them
 #### Clone of copy project to a development directory
 
 ```
-git clone
+git clone https://github.com/larryschirmer/express-mongoose-boilerplate.git
 ```
 
 #### Install project dependancies
@@ -102,4 +102,25 @@ Starts server at index.js with nodemon
 
 ```
 npm run dev
+```
+
+#### Clean up
+Stop and remove mongo container
+```
+docker container stop mongo-development-container
+docker container rm mongo-development-container
+```
+Confirm container removal
+```
+docker container ls -a
+```
+#### Extra Cleanup
+Remove unnamed docker volumes and mongo image
+```
+docker volume ls
+docker volume prune
+docker volume ls
+
+docker image ls
+docker image prune
 ```
