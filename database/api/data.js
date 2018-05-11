@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 const { filter } = require('graphql-anywhere');
 const { Data } = require('../models');
 const dataModel = require('./data.model');
@@ -36,9 +37,33 @@ const isValidId = id => {
   return isValid(id);
 };
 
+const isValidDocument = doc => {
+  const schema = Joi.object().keys({
+    data: Joi.object().keys({
+      docID: Joi.string().required(),
+      edited: Joi.boolean().required(),
+      title: Joi.string().required(),
+      author: Joi.string().required(),
+      likes: Joi.number()
+        .integer()
+        .min(0)
+        .required(),
+      body: Joi.string().required(),
+    }),
+    createdAt: Joi.date()
+      .iso()
+      .required(),
+  });
+
+  const { error } = Joi.validate(doc, schema);
+  if (error) return error.details[0].message;
+  return true;
+};
+
 module.exports = {
   getDocument,
   saveDocument,
   removeDocument,
   isValidId,
+  isValidDocument,
 };
