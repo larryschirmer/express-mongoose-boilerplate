@@ -1,5 +1,4 @@
 module.exports = {
-  secret: 'secretkeysecretkeysecretkeysecretkey',
-  ssl_location: 'certs',
   db_host: 'localhost',
+  db_port: 27017,
 };
