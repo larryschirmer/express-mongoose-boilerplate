@@ -1,4 +1,4 @@
-const { getDocument, saveDocument, removeDocument } = require('../../api/data');
+const { getDocument, saveDocument, removeDocument, isValidId } = require('../../api/data');
 
 const makeDocument = (timestamp, id) => ({
   data: [
@@ -83,6 +83,16 @@ describe('data', () => {
       await removeDocument(id);
       const removedDocument = await getDocument(id);
       expect(removedDocument.error).toBeTruthy();
+    });
+  });
+
+  describe('isValidId', () => {
+    it('validates Mongo document Object Ids', () => {
+      const invalidId = 'bleurgh';
+      const validId = '53cb6b9b4f4ddef1ad47f943';
+
+      expect(isValidId(invalidId)).toBeFalsy();
+      expect(isValidId(validId)).toBeTruthy();
     });
   });
 });
